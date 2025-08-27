@@ -19,7 +19,7 @@ interface ConsumptionChartProps {
 export default function ConsumptionChart({ rooms }: ConsumptionChartProps) {
   const chartData = rooms.map((room) => ({
     room: room.name,
-    consumption: calculateRoomKWh(room.appliances).monthlyKWh,
+    consumption: parseFloat(calculateRoomKWh(room.appliances).monthlyKWh.toFixed(2)),
     fill: `hsl(var(--chart-${(rooms.indexOf(room) % 5) + 1}))`,
   }));
 
@@ -36,8 +36,8 @@ export default function ConsumptionChart({ rooms }: ConsumptionChartProps) {
   if (totalConsumption === 0) {
     return (
         <div className="flex h-full w-full flex-col items-center justify-center text-center text-muted-foreground">
-            <p className="text-sm">No consumption data to display.</p>
-            <p className="text-xs">Add some appliances to see the chart.</p>
+            <p className="text-sm">Sem dados de consumo para exibir.</p>
+            <p className="text-xs">Adicione alguns aparelhos para ver o gráfico.</p>
         </div>
     );
   }
@@ -47,7 +47,7 @@ export default function ConsumptionChart({ rooms }: ConsumptionChartProps) {
       <PieChart>
         <ChartTooltip
           cursor={false}
-          content={<ChartTooltipContent hideLabel />}
+          content={<ChartTooltipContent hideLabel formatter={(value) => `${value} kWh`}/>}
         />
         <Pie
           data={chartData}

@@ -37,7 +37,7 @@ interface ApplianceCardProps {
 }
 
 export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete }: ApplianceCardProps) {
-  const { dailyKWh, monthlyKWh } = calculateApplianceKWh(
+  const { monthlyKWh } = calculateApplianceKWh(
     appliance.power,
     appliance.dailyUsageHours
   );
@@ -59,16 +59,16 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
         setSuggestion(result);
       } else {
          toast({
-          title: "No obvious savings",
-          description: "This appliance's usage seems optimized already.",
+          title: "Nenhuma economia óbvia",
+          description: "O uso deste aparelho já parece otimizado.",
         });
       }
     } catch (error) {
       console.error(error);
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Could not get savings suggestion.',
+        title: 'Erro',
+        description: 'Não foi possível obter a sugestão de economia.',
       });
     } finally {
       setIsLoadingSuggestion(false);
@@ -81,20 +81,20 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
         <div className="flex-grow">
           <h4 className="font-semibold text-lg">{appliance.name}</h4>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
-            <div className="flex items-center gap-1.5" title="Power">
+            <div className="flex items-center gap-1.5" title="Potência">
               <Zap className="h-4 w-4 text-primary" />
               <span>{appliance.power} W</span>
             </div>
-            <div className="flex items-center gap-1.5" title="Daily Usage">
+            <div className="flex items-center gap-1.5" title="Uso Diário">
               <Clock className="h-4 w-4 text-primary" />
-              <span>{appliance.dailyUsageHours}h / day</span>
+              <span>{appliance.dailyUsageHours}h / dia</span>
             </div>
           </div>
         </div>
         <div className="flex w-full sm:w-auto items-center justify-between gap-2">
            <div className="text-right">
             <p className="font-semibold text-primary">{formatKWh(monthlyKWh)}</p>
-            <p className="text-xs text-accent">{formatCurrency(monthlyKWh * costPerKWh)} / month</p>
+            <p className="text-xs text-accent">{formatCurrency(monthlyKWh * costPerKWh)} / mês</p>
           </div>
           <div className="flex items-center gap-1">
             <AlertDialog open={!!suggestion} onOpenChange={(open) => !open && setSuggestion(null)}>
@@ -103,7 +103,7 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
                 variant="ghost"
                 onClick={handleSuggestion}
                 disabled={isLoadingSuggestion}
-                title="Get Savings Suggestion"
+                title="Obter Sugestão de Economia"
                 className="hover:text-primary transition-colors"
               >
                 {isLoadingSuggestion ? (
@@ -115,40 +115,40 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
                <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-primary"/> Savings Suggestion
+                    <Sparkles className="h-5 w-5 text-primary"/> Sugestão de Economia
                     </AlertDialogTitle>
                   <AlertDialogDescription>
-                    {suggestion?.suggestion || "Loading suggestion..."}
+                    {suggestion?.suggestion || "Carregando sugestão..."}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogAction>Got it!</AlertDialogAction>
+                  <AlertDialogAction>Entendi!</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
 
             <AddApplianceDialog onSave={(data) => onEdit({ ...data, id: appliance.id })} editAppliance={appliance}>
-              <Button size="icon" variant="ghost" title="Edit Appliance" className="hover:text-primary transition-colors">
+              <Button size="icon" variant="ghost" title="Editar Aparelho" className="hover:text-primary transition-colors">
                 <Pencil className="h-4 w-4" />
               </Button>
             </AddApplianceDialog>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button size="icon" variant="ghost" title="Delete Appliance" className="text-destructive/80 hover:text-destructive transition-colors">
+                <Button size="icon" variant="ghost" title="Excluir Aparelho" className="text-destructive/80 hover:text-destructive transition-colors">
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently delete the <strong>{appliance.name}</strong> from this room.
+                    Isso excluirá permanentemente o <strong>{appliance.name}</strong> deste cômodo.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction onClick={onDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                    Delete
+                    Excluir
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

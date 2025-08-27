@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 2% 12%;
+    --background: 0 0% 0%; /* Black */
+    --foreground: 0 0% 98%; /* White */
+    --card: 0 0% 12%; /* Dark Gray */
     --card-foreground: 0 0% 98%;
-    --popover: 240 2% 12%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 24 100% 50%;
+    --primary: 24 100% 50%; /* Orange */
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 2% 20%;
+    --secondary: 0 0% 20%; /* Dark Gray */
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 2% 20%;
+    --muted: 0 0% 20%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 26 100% 55%;
+    --accent: 26 100% 55%; /* Neon Orange */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 2% 20%;
-    --input: 240 2% 20%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 26 100% 55%;
     --radius: 0.5rem;
     --chart-1: 24 100% 50%;
@@ -32,24 +32,24 @@
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 2% 12%;
+    --background: 0 0% 0%; /* Black */
+    --foreground: 0 0% 98%; /* White */
+    --card: 0 0% 12%; /* Dark Gray */
     --card-foreground: 0 0% 98%;
-    --popover: 240 2% 12%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 24 100% 50%;
+    --primary: 24 100% 50%; /* Orange */
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 2% 20%;
+    --secondary: 0 0% 20%; /* Dark Gray */
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 2% 20%;
+    --muted: 0 0% 20%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 26 100% 55%;
+    --accent: 26 100% 55%; /* Neon Orange */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 2% 20%;
-    --input: 240 2% 20%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 26 100% 55%;
     --chart-1: 24 100% 50%;
     --chart-2: 0 0% 80%;

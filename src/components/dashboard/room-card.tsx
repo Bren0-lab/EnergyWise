@@ -60,20 +60,20 @@ export default function RoomCard({
           {isEditing ? (
             <form onSubmit={handleNameSubmit} className="flex gap-2">
               <Input value={editedName} onChange={e => setEditedName(e.target.value)} className="h-9"/>
-              <Button type="submit" size="sm">Save</Button>
-              <Button type="button" variant="ghost" size="sm" onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Button type="submit" size="sm">Salvar</Button>
+              <Button type="button" variant="ghost" size="sm" onClick={() => setIsEditing(false)}>Cancelar</Button>
             </form>
           ) : (
             <CardTitle className="text-xl font-bold text-primary">{room.name}</CardTitle>
           )}
           <CardDescription>
-            Monthly: {formatKWh(roomTotals.monthlyKWh)} / {formatCurrency(roomTotals.monthlyKWh * costPerKWh)}
+            Mensal: {formatKWh(roomTotals.monthlyKWh)} / {formatCurrency(roomTotals.monthlyKWh * costPerKWh)}
           </CardDescription>
         </div>
         <div className="flex items-center gap-2">
           <AddApplianceDialog onSave={onAddAppliance}>
             <Button size="sm" variant="outline" className="transition-all hover:bg-primary hover:text-primary-foreground">
-              <Plus className="mr-2 h-4 w-4" /> Appliance
+              <Plus className="mr-2 h-4 w-4" /> Aparelho
             </Button>
           </AddApplianceDialog>
            <DropdownMenu>
@@ -85,26 +85,26 @@ export default function RoomCard({
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setIsEditing(true)}>
                 <Pencil className="mr-2 h-4 w-4" />
-                <span>Rename Room</span>
+                <span>Renomear Cômodo</span>
               </DropdownMenuItem>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-destructive focus:bg-destructive/20 focus:text-destructive">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    <span>Delete Room</span>
+                    <span>Excluir Cômodo</span>
                   </DropdownMenuItem>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogTitle>Você tem certeza absoluta?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the <strong>{room.name}</strong> room and all its appliances.
+                      Essa ação não pode ser desfeita. Isso excluirá permanentemente o cômodo <strong>{room.name}</strong> e todos os seus aparelhos.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
                     <AlertDialogAction onClick={onDeleteRoom} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                      Delete
+                      Excluir
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -128,8 +128,8 @@ export default function RoomCard({
           </div>
         ) : (
           <div className="text-center text-muted-foreground py-10">
-            <p>No appliances in this room yet.</p>
-            <p className="text-sm">Click "Add Appliance" to get started.</p>
+            <p>Nenhum aparelho neste cômodo ainda.</p>
+            <p className="text-sm">Clique em "Adicionar Aparelho" para começar.</p>
           </div>
         )}
       </CardContent>

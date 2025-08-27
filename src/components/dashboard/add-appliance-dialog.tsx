@@ -19,12 +19,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import type { Appliance } from '@/lib/types';
 
 const applianceSchema = z.object({
-  name: z.string().min(1, 'Appliance name is required.'),
-  power: z.coerce.number().min(1, 'Power must be greater than 0.'),
+  name: z.string().min(1, 'O nome do aparelho é obrigatório.'),
+  power: z.coerce.number().min(1, 'A potência deve ser maior que 0.'),
   dailyUsageHours: z.coerce
     .number()
-    .min(0, 'Usage cannot be negative.')
-    .max(24, 'Usage cannot exceed 24 hours.'),
+    .min(0, 'O uso não pode ser negativo.')
+    .max(24, 'O uso não pode exceder 24 horas.'),
 });
 
 type ApplianceFormData = z.infer<typeof applianceSchema>;
@@ -72,9 +72,9 @@ export function AddApplianceDialog({ children, onSave, editAppliance }: AddAppli
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>{editAppliance ? 'Edit Appliance' : 'Add Appliance'}</DialogTitle>
+              <DialogTitle>{editAppliance ? 'Editar Aparelho' : 'Adicionar Aparelho'}</DialogTitle>
               <DialogDescription>
-                {editAppliance ? 'Update the details for this appliance.' : 'Enter the details for the new appliance.'}
+                {editAppliance ? 'Atualize os detalhes deste aparelho.' : 'Insira os detalhes do novo aparelho.'}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -83,9 +83,9 @@ export function AddApplianceDialog({ children, onSave, editAppliance }: AddAppli
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Appliance Name</FormLabel>
+                    <FormLabel>Nome do Aparelho</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., LED TV" {...field} />
+                      <Input placeholder="Ex: TV LED" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -96,9 +96,9 @@ export function AddApplianceDialog({ children, onSave, editAppliance }: AddAppli
                 name="power"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Power (Watts)</FormLabel>
+                    <FormLabel>Potência (Watts)</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="e.g., 65" {...field} />
+                      <Input type="number" placeholder="Ex: 65" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,9 +109,9 @@ export function AddApplianceDialog({ children, onSave, editAppliance }: AddAppli
                 name="dailyUsageHours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Average Daily Usage (Hours)</FormLabel>
+                    <FormLabel>Uso Diário Médio (Horas)</FormLabel>
                     <FormControl>
-                      <Input type="number" step="0.1" placeholder="e.g., 4.5" {...field} />
+                      <Input type="number" step="0.1" placeholder="Ex: 4.5" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -119,7 +119,7 @@ export function AddApplianceDialog({ children, onSave, editAppliance }: AddAppli
               />
             </div>
             <DialogFooter>
-              <Button type="submit">{editAppliance ? 'Save Changes' : 'Add Appliance'}</Button>
+              <Button type="submit">{editAppliance ? 'Salvar Alterações' : 'Adicionar Aparelho'}</Button>
             </DialogFooter>
           </form>
         </Form>

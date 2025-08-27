@@ -30,7 +30,7 @@ export function DashboardHeader({ costPerKWh, setCostPerKWh }: HeaderProps) {
             onChange={(e) => setCostPerKWh(parseFloat(e.target.value) || 0)}
             className="w-24 bg-card"
             step="0.01"
-            aria-label="Cost per KWh"
+            aria-label="Custo por KWh"
           />
         </div>
       </div>
