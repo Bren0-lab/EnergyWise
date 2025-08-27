@@ -4,14 +4,7 @@ import { useState } from 'react';
 import type { Appliance } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-  Zap,
-  Clock,
-  Pencil,
-  Trash2,
-  Sparkles,
-  Loader2,
-} from 'lucide-react';
+import { Zap, Clock, Pencil, Trash2, Sparkles, Loader2 } from 'lucide-react';
 import { AddApplianceDialog } from './add-appliance-dialog';
 import { calculateApplianceKWh, formatCurrency, formatKWh } from '@/lib/helpers';
 import {
@@ -37,10 +30,7 @@ interface ApplianceCardProps {
 }
 
 export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete }: ApplianceCardProps) {
-  const { monthlyKWh } = calculateApplianceKWh(
-    appliance.power,
-    appliance.dailyUsageHours
-  );
+  const { monthlyKWh, dailyKWh, yearlyKWh } = calculateApplianceKWh(appliance.power, appliance.dailyUsageHours);
   const { toast } = useToast();
   const [isLoadingSuggestion, setIsLoadingSuggestion] = useState(false);
   const [suggestion, setSuggestion] = useState<SuggestSavingsOutput | null>(null);
@@ -58,17 +48,18 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
       if (result.applicable) {
         setSuggestion(result);
       } else {
-         toast({
-          title: "Nenhuma economia óbvia",
-          description: "O uso deste aparelho já parece otimizado.",
+        toast({
+          variant: 'default',
+          title: 'Nenhuma Sugestão Aplicável',
+          description: 'O uso deste aparelho já parece otimizado.',
         });
       }
     } catch (error) {
       console.error(error);
       toast({
         variant: 'destructive',
-        title: 'Erro',
-        description: 'Não foi possível obter a sugestão de economia.',
+        title: 'Erro de IA',
+        description: 'Não foi possível obter a sugestão de economia no momento.',
       });
     } finally {
       setIsLoadingSuggestion(false);
@@ -76,25 +67,30 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
   };
 
   return (
-    <Card className="bg-secondary/30 p-3 sm:p-4 rounded-lg shadow-md transition-all duration-300 hover:bg-secondary/50 hover:scale-[1.01]">
+    <Card className="bg-secondary/30 p-3 sm:p-4 rounded-lg shadow-md transition-all duration-300 hover:bg-secondary/50 hover:shadow-neon-sm">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex-grow">
-          <h4 className="font-semibold text-lg">{appliance.name}</h4>
+          <h4 className="font-semibold text-lg text-primary">{appliance.name}</h4>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
             <div className="flex items-center gap-1.5" title="Potência">
-              <Zap className="h-4 w-4 text-primary" />
+              <Zap className="h-4 w-4 text-accent" />
               <span>{appliance.power} W</span>
             </div>
             <div className="flex items-center gap-1.5" title="Uso Diário">
-              <Clock className="h-4 w-4 text-primary" />
+              <Clock className="h-4 w-4 text-accent" />
               <span>{appliance.dailyUsageHours}h / dia</span>
             </div>
           </div>
+          <div className="text-xs text-muted-foreground mt-2 grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3">
+             <p title="Consumo Diário"><b>Diário:</b> {formatKWh(dailyKWh)}</p>
+             <p title="Consumo Mensal"><b>Mensal:</b> {formatKWh(monthlyKWh)}</p>
+             <p title="Consumo Anual"><b>Anual:</b> {formatKWh(yearlyKWh)}</p>
+          </div>
         </div>
         <div className="flex w-full sm:w-auto items-center justify-between gap-2">
-           <div className="text-right">
-            <p className="font-semibold text-primary">{formatKWh(monthlyKWh)}</p>
-            <p className="text-xs text-accent">{formatCurrency(monthlyKWh * costPerKWh)} / mês</p>
+          <div className="text-right">
+            <p className="font-bold text-lg text-primary">{formatCurrency(monthlyKWh * costPerKWh)}</p>
+            <p className="text-xs text-accent">/mês</p>
           </div>
           <div className="flex items-center gap-1">
             <AlertDialog open={!!suggestion} onOpenChange={(open) => !open && setSuggestion(null)}>
@@ -112,17 +108,15 @@ export default function ApplianceCard({ appliance, costPerKWh, onEdit, onDelete 
                   <Sparkles className="h-4 w-4" />
                 )}
               </Button>
-               <AlertDialogContent>
+              <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-primary"/> Sugestão de Economia
-                    </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    {suggestion?.suggestion || "Carregando sugestão..."}
-                  </AlertDialogDescription>
+                    <Sparkles className="h-5 w-5 text-primary" /> Sugestão de Economia
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>{suggestion?.suggestion || 'Carregando...'}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogAction>Entendi!</AlertDialogAction>
+                  <AlertDialogAction onClick={() => setSuggestion(null)}>Entendi!</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
